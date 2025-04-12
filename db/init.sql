@@ -1,21 +1,25 @@
--- Таблица пользователей
+-- Создание таблицы пользователей
 CREATE TABLE users (
-                       id SERIAL PRIMARY KEY,
-                       email VARCHAR(255) UNIQUE NOT NULL,
+                       user_id SERIAL PRIMARY KEY,
+                       username VARCHAR(255) NOT NULL UNIQUE,
+                       email VARCHAR(255) NOT NULL UNIQUE,
                        password VARCHAR(255) NOT NULL,
-                       name VARCHAR(255),
-                       role VARCHAR(20) CHECK (role IN ('employer', 'jobseeker')),
-                       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                       role VARCHAR(50) NOT NULL
 );
 
--- Таблица вакансий
+-- Создание таблицы вакансий
 CREATE TABLE jobs (
-                      id SERIAL PRIMARY KEY,
-                      user_id INTEGER REFERENCES users(id),
+                      job_id SERIAL PRIMARY KEY,
                       title VARCHAR(255) NOT NULL,
-                      description TEXT,
-                      salary INTEGER,
-                      experience_required VARCHAR(100),
-                      category VARCHAR(100),
-                      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                      description TEXT NOT NULL,
+                      salary INTEGER NOT NULL,
+                      employer_id INTEGER REFERENCES users(user_id)
+);
+
+-- Создание таблицы откликов
+CREATE TABLE applications (
+                              application_id SERIAL PRIMARY KEY,
+                              job_id INTEGER REFERENCES jobs(job_id),
+                              worker_id INTEGER REFERENCES users(user_id),
+                              status VARCHAR(50) NOT NULL
 );
