@@ -1,9 +1,9 @@
 <?php
-$pdo = require_once 'db.php';
+session_start();
+require_once 'db.php';
 
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    echo "POST-поступил<br>";
-    var_dump($_POST);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    global $pdo;
 
     $username = $_POST['username'] ?? '';
     $email = $_POST['email'] ?? '';
@@ -11,27 +11,33 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $role = $_POST['role'] ?? '';
 
     // Валидация
-    if (empty($username) || empty($email) || empty($password) || empty($role)) {
-        die("❗ Пожалуйста, заполните все поля.");
+    if (!$username || !$email || !$password || !$role) {
+        die("Пожалуйста, заполните все поля.");
     }
 
+    // Проверка на уникальность email и username
+    $stmt = $pdo->prepare("SELECT * FROM users WHERE email = :email OR username = :username");
+    $stmt->execute(['email' => $email, 'username' => $username]);
+    if ($stmt->rowCount() > 0) {
+        die("Пользователь с таким email или именем уже существует.");
+    }
+
+    // Хеширование пароля
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-    $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ?");
-    $stmt->execute([$email]);
-    if ($stmt->rowCount() > 0) {
-        die("❌ Пользователь с таким email уже существует.");
-    }
+    // Добавление в БД
+    $stmt = $pdo->prepare("INSERT INTO users (username, email, password, role) VALUES (:username, :email, :password, :role)");
+    $success = $stmt->execute([
+        'username' => $username,
+        'email' => $email,
+        'password' => $hashedPassword,
+        'role' => $role
+    ]);
 
-    $stmt = $pdo->prepare("INSERT INTO users (username, email, password, role) VALUES (?, ?, ?, ?)");
-    $result = $stmt->execute([$username, $email, $hashedPassword, $role]);
-
-    if ($result) {
-        echo "✅ Регистрация прошла успешно!";
-        // header("Location: /Kurs/frontend/index.php");
-        // exit;
+    if ($success) {
+        header("Location: /Kurs/frontend/login.php");
+        exit;
     } else {
-        echo "❌ Ошибка регистрации: ";
-        var_dump($stmt->errorInfo());
+        echo "Ошибка регистрации.";
     }
 }

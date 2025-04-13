@@ -1,54 +1,51 @@
 <?php
+global $pdo;
 session_start();
-include 'header.php';
+require_once '../backend/db.php';
 
-// Проверка, авторизован ли пользователь
-if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'seeker') {
     header("Location: login.php");
     exit();
 }
 
+include 'header.php';
+
 $user_id = $_SESSION['user_id'];
 $username = $_SESSION['username'];
 
-// Подключение к базе данных
-$conn = new mysqli('localhost', 'username', 'password', 'database'); // Используй свои параметры
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-// Получаем резюме
-$resume_query = "SELECT * FROM resumes WHERE user_id = '$user_id'";
-$resume_result = $conn->query($resume_query);
-
 // Получаем отклики
-$applications_query = "SELECT * FROM applications WHERE seeker_id = '$user_id'";
-$applications_result = $conn->query($applications_query);
+$stmt = $pdo->prepare("
+    SELECT 
+        a.status, a.applied_at,
+        j.job_title, j.job_description, j.salary, j.location,
+        u.username AS employer_name
+    FROM applications a
+    JOIN jobs j ON a.job_id = j.id
+    JOIN users u ON j.employer_id = u.user_id
+    WHERE a.worker_id = ?
+    ORDER BY a.applied_at DESC
+");
+$stmt->execute([$user_id]);
+$applications = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
-<h1>Личный кабинет, <?php echo $username; ?></h1>
+<h1>Добро пожаловать, <?= htmlspecialchars($username) ?></h1>
+<h2>Ваши отклики</h2>
 
-<h2>Мое резюме</h2>
-<?php
-if ($resume_result->num_rows > 0) {
-    $resume = $resume_result->fetch_assoc();
-    echo "<p>" . $resume['resume_text'] . "</p>";
-} else {
-    echo "<p>У вас нет резюме. <a href='create-resume.php'>Создать резюме</a></p>";
-}
-?>
+<?php if ($applications): ?>
+    <?php foreach ($applications as $app): ?>
+        <div style="border: 1px solid #ccc; padding: 10px; margin-bottom: 15px;">
+            <h3><?= htmlspecialchars($app['job_title']) ?></h3>
+            <p><strong>Описание:</strong> <?= nl2br(htmlspecialchars($app['job_description'])) ?></p>
+            <p><strong>Работодатель:</strong> <?= htmlspecialchars($app['employer_name']) ?></p>
+            <p><strong>Зарплата:</strong> <?= htmlspecialchars($app['salary']) ?> руб.</p>
+            <p><strong>Локация:</strong> <?= htmlspecialchars($app['location']) ?></p>
+            <p><strong>Статус:</strong> <?= htmlspecialchars($app['status']) ?></p>
+            <p><em>Дата отклика: <?= htmlspecialchars($app['applied_at']) ?></em></p>
+        </div>
+    <?php endforeach; ?>
+<?php else: ?>
+    <p>Вы еще не откликались на вакансии.</p>
+<?php endif; ?>
 
-<h2>Мои отклики</h2>
-<?php
-if ($applications_result->num_rows > 0) {
-    while ($application = $applications_result->fetch_assoc()) {
-        echo "<p>Вы откликнулись на вакансию: " . $application['vacancy_id'] . " в " . $application['applied_at'] . "</p>";
-    }
-} else {
-    echo "<p>Вы еще не откликались на вакансии.</p>";
-}
-
-$conn->close();
-include 'footer.php';
-?>
+<?php include 'footer.php'; ?>

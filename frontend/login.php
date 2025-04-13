@@ -1,21 +1,16 @@
-<?php
-session_start();
-include 'header.php';
-?>
+<?php include 'header.php'; ?>
 
-<h1>Вход</h1>
+<h2>Вход</h2>
+<form action="/Kurs/backend/login-action.php" method="POST">
+    <label>Email:</label>
+    <input type="email" name="email" required><br>
 
-<form action="/Kurs/frontend/login-action.php" method="POST">
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" required><br>
-
-    <label for="password">Пароль:</label>
-    <input type="password" id="password" name="password" required><br>
+    <label>Пароль:</label>
+    <input type="password" name="password" required><br>
 
     <button type="submit">Войти</button>
 </form>
 
-<p>Нет аккаунта? <a href="/Kurs/frontend/register.php">Зарегистрироваться</a></p>
-<p><a href="/Kurs/frontend/index.php">На главную</a></p>
+<p><a href="register.php">Нет аккаунта? Зарегистрируйтесь</a></p>
 
 <?php include 'footer.php'; ?>

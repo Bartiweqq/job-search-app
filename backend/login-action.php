@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Проверка пароля
     if ($user && password_verify($password, $user['password'])) {
         // Успешный вход — временно просто сообщение
-        echo "Добро пожаловать, " . htmlspecialchars($user['full_name']) . "!";
+        echo "Добро пожаловать, " . htmlspecialchars($user['username']) . "!";
         // Здесь можно будет сделать перенаправление в личный кабинет
     } else {
         echo "Неверный email или пароль.";
