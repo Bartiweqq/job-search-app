@@ -9,6 +9,16 @@ require_once 'db.php';
 
     <label for="password">Пароль:</label>
     <input type="password" id="password" name="password" required>
+    <label for="username">Имя пользователя:</label>
+    <input type="text" id="username" name="username" required><br>
+
+    <label for="role">Роль:</label>
+    <select id="role" name="role">
+        <option value="seeker">Соискатель</option>
+        <option value="employer">Работодатель</option>
+    </select>
+    </select><br>
+
 
     <button type="submit">Зарегистрироваться</button>
 </form>

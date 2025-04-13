@@ -1,30 +1,37 @@
 <?php
-global $pdo;
-include 'db.php'; // Подключаем файл для работы с базой данных
-require_once 'db.php';
+$pdo = require_once 'db.php';
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = $_POST['username'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $role = $_POST['role']; // Соискатель или работодатель
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    echo "POST-поступил<br>";
+    var_dump($_POST);
 
-    // Хеширование пароля
-    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+    $username = $_POST['username'] ?? '';
+    $email = $_POST['email'] ?? '';
+    $password = $_POST['password'] ?? '';
+    $role = $_POST['role'] ?? '';
 
-    // Проверка на существование пользователя с таким же email
-    $query = "SELECT * FROM users WHERE email = ?";
-    $stmt = $pdo->prepare($query);
-    $stmt->execute([$email]);
-    if ($stmt->rowCount() > 0) {
-        die("Пользователь с таким email уже существует.");
+    // Валидация
+    if (empty($username) || empty($email) || empty($password) || empty($role)) {
+        die("❗ Пожалуйста, заполните все поля.");
     }
 
-    // Вставка данных пользователя в таблицу users
-    $query = "INSERT INTO users (username, email, password, role) VALUES (?, ?, ?, ?)";
-    $stmt = $pdo->prepare($query);
-    $stmt->execute([$username, $email, $hashedPassword, $role]);
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-    echo "Регистрация прошла успешно!";
+    $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ?");
+    $stmt->execute([$email]);
+    if ($stmt->rowCount() > 0) {
+        die("❌ Пользователь с таким email уже существует.");
+    }
+
+    $stmt = $pdo->prepare("INSERT INTO users (username, email, password, role) VALUES (?, ?, ?, ?)");
+    $result = $stmt->execute([$username, $email, $hashedPassword, $role]);
+
+    if ($result) {
+        echo "✅ Регистрация прошла успешно!";
+        // header("Location: /Kurs/frontend/index.php");
+        // exit;
+    } else {
+        echo "❌ Ошибка регистрации: ";
+        var_dump($stmt->errorInfo());
+    }
 }
-?>

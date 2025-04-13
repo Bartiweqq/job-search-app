@@ -1,8 +1,7 @@
-<?php include 'header.php';
-include 'backend/db.php'; // Подключаем файл для работы с базой данных ?>
+<?php include 'header.php'; ?>
 
 <h2>Регистрация</h2>
-<form action="/backend/register-action.php" method="POST">
+<form action="/Kurs/backend/register-action.php" method="POST">
     <label for="username">Имя пользователя:</label>
     <input type="text" id="username" name="username" required><br>
 

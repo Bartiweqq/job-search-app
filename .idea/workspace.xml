@@ -5,11 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2b7de6c0-286b-4817-b77c-5a73fb91ef6b" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/backend/check-db.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/db.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/db.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/register-action.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/register-action.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/footer.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/footer.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/header.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/header.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/register-action.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/register-action.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/register.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/register.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -78,7 +78,7 @@
       <option name="presentableId" value="Default" />
       <updated>1744540797380</updated>
       <workItem from="1744540798574" duration="5362000" />
-      <workItem from="1744566129622" duration="462000" />
+      <workItem from="1744566129622" duration="3129000" />
     </task>
     <servers />
   </component>

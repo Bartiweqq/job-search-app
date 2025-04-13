@@ -2,7 +2,8 @@
 $host = 'localhost';
 $dbname = 'jobsearch_db';
 $username = 'postgres';
-$password = '123123'; // ЗАМЕНИТЬ на настоящий пароль
+$password = '1234';
+
 
 try {
     $pdo = new PDO("pgsql:host=$host;dbname=$dbname", $username, $password);
@@ -10,4 +11,6 @@ try {
 } catch (PDOException $e) {
     die("Ошибка подключения: " . $e->getMessage());
 }
+return $pdo;
+
 ?>
