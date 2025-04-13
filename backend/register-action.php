@@ -1,5 +1,7 @@
 <?php
+global $pdo;
 include 'db.php'; // Подключаем файл для работы с базой данных
+require_once 'db.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];

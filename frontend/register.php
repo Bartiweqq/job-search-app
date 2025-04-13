@@ -1,7 +1,9 @@
 <?php include 'header.php'; ?>
+require_once 'db.php';
 
 <h1>Регистрация</h1>
-<form action="/backend/register-action.php" method="POST">
+<form action="/Kurs/backend/register-action.php" method="POST">
+
     <label for="email">Email:</label>
     <input type="email" id="email" name="email" required>
 
