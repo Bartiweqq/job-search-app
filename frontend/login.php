@@ -41,18 +41,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 
 
-<h1>Вход</h1>
-<form action="/frontend/login-action.php" method="POST">
-    <label for="username">Логин:</label>
-    <input type="text" id="username" name="username" required><br>
+
+<h1>Войти</h1>
+<form action="/backend/login-action.php" method="POST">
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
 
     <label for="password">Пароль:</label>
-    <input type="password" id="password" name="password" required><br>
+    <input type="password" id="password" name="password" required>
 
     <button type="submit">Войти</button>
 </form>
 
-<a href="/frontend/register.php">Зарегистрироваться</a>
+<p>Нет аккаунта? <a href="/frontend/register.php">Зарегистрироваться</a></p>
+<p><a href="/frontend/index.php">На главную</a></p>
+
+
+
 
 <?php include 'footer.php'; ?>
 

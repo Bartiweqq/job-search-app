@@ -1,8 +1,3 @@
-</main>
-<footer>
-    <div class="container">
-        <p>&copy; <?php echo date("Y"); ?> JobSearch. Все права защищены.</p>
-    </div>
-</footer>
-</body>
-</html>
+<div class="footer">
+    <p>&copy; 2025 Job Search. Все права защищены.</p>
+</div>

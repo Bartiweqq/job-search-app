@@ -1,25 +1,21 @@
 <?php include 'header.php'; ?>
 
 <h1>Регистрация</h1>
-<form action="/frontend/register-action.php" method="POST">
-    <label for="username">Логин:</label>
-    <input type="text" id="username" name="username" required><br>
+<form action="/backend/register-action.php" method="POST">
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
 
     <label for="password">Пароль:</label>
-    <input type="password" id="password" name="password" required><br>
-
-    <label for="role">Роль:</label>
-    <select name="role" id="role" required>
-        <option value="job_seeker">Соискатель</option>
-        <option value="employer">Работодатель</option>
-    </select><br>
+    <input type="password" id="password" name="password" required>
 
     <button type="submit">Зарегистрироваться</button>
 </form>
 
-<a href="/frontend/login.php">Уже есть аккаунт? Войти</a>
+<p>Уже есть аккаунт? <a href="/frontend/login.php">Войти</a></p>
+<p><a href="/frontend/index.php">На главную</a></p>
 
 <?php include 'footer.php'; ?>
+
 
 
 <?php

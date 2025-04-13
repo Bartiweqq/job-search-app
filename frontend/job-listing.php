@@ -1,8 +1,15 @@
 <?php include 'header.php'; ?>
 
-<h1>Вакансии</h1>
-<!-- Здесь вывод вакансий и возможность отклика -->
+<h1>Список вакансий</h1>
+<a href="/frontend/register.php">Зарегистрироваться</a> |
+<a href="/frontend/login.php">Войти</a>
 
-<a href="/frontend/index.php">Вернуться на главную</a>
+<div>
+    <h2>Поиск вакансий</h2>
+    <form action="/frontend/job-listing.php" method="GET">
+        <input type="text" name="search" placeholder="Поиск по вакансии..." required>
+        <button type="submit">Искать</button>
+    </form>
+</div>
 
 <?php include 'footer.php'; ?>
