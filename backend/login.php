@@ -1,26 +1,18 @@
-<?php
-require_once 'db.php';
+<?php include 'header.php'; ?>
 
-session_start();
+<div class="container fade-in">
+    <h2>Вход</h2>
+    <form action="/Kurs/backend/login-action.php" method="POST">
+        <label>Email:</label>
+        <input type="email" name="email" required><br>
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    global $pdo; // ✅ обязательно
+        <label>Пароль:</label>
+        <input type="password" name="password" required><br>
 
-    $email = isset($_POST['email']) ? $_POST['email'] : '';
-    $password = isset($_POST['password']) ? $_POST['password'] : '';
+        <button type="submit">Войти</button>
+    </form>
 
-    $sql = "SELECT * FROM users WHERE email = :email";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute([':email' => $email]);
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    <p><a href="register.php">Нет аккаунта? Зарегистрируйтесь</a></p>
+</div>
 
-    if ($user && password_verify($password, $user['password'])) {
-        $_SESSION['user_id'] = $user['user_id'];
-        $_SESSION['username'] = $user['username'];
-        $_SESSION['role'] = $user['role'];
-        echo "Успешный вход!";
-    } else {
-        echo "Неверный логин или пароль.";
-    }
-}
-?>
+<?php include 'footer.php'; ?>
