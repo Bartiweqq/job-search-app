@@ -5,19 +5,19 @@ require_once 'db.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_SESSION['role'] === 'employer') {
     global $pdo;
 
-    $title = $_POST['title'] ?? '';
+    $title = $_POST['job_title'] ?? '';
+    $description = $_POST['job_description'] ?? '';
     $salary = $_POST['salary'] ?? 0;
-    $experience = $_POST['experience'] ?? 0;
-    $description = $_POST['description'] ?? '';
+    $location = $_POST['location'] ?? '';
     $employer_id = $_SESSION['user_id'];
 
-    // Мини-валидация
-    if (!$title || !$description || $salary <= 0) {
+    if (!$title || !$description || $salary <= 0 || !$location) {
         die("Пожалуйста, заполните все поля корректно.");
     }
 
-    $stmt = $pdo->prepare("INSERT INTO jobs (title, description, salary, experience, employer_id) VALUES (?, ?, ?, ?, ?)");
-    $stmt->execute([$title, $description, $salary, $experience, $employer_id]);
+    $stmt = $pdo->prepare("INSERT INTO jobs (job_title, job_description, salary, location, employer_id, date_posted)
+                           VALUES (?, ?, ?, ?, ?, NOW())");
+    $stmt->execute([$title, $description, $salary, $location, $employer_id]);
 
     header("Location: /Kurs/frontend/employer-dashboard.php");
     exit;

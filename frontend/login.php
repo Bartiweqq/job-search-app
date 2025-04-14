@@ -1,16 +1,14 @@
 <?php include 'header.php'; ?>
 
-<h2>Вход</h2>
-<form action="/Kurs/backend/login-action.php" method="POST">
-    <label>Email:</label>
-    <input type="email" name="email" required><br>
+<div class="container">
+    <h2>Вход</h2>
+    <form action="/Kurs/backend/login-action.php" method="POST">
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="password" name="password" placeholder="Пароль" required>
+        <button type="submit">Войти</button>
+    </form>
 
-    <label>Пароль:</label>
-    <input type="password" name="password" required><br>
-
-    <button type="submit">Войти</button>
-</form>
-
-<p><a href="register.php">Нет аккаунта? Зарегистрируйтесь</a></p>
+    <p><a href="register.php">Нет аккаунта? Зарегистрируйтесь</a></p>
+</div>
 
 <?php include 'footer.php'; ?>

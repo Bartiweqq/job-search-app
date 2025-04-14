@@ -5,14 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2b7de6c0-286b-4817-b77c-5a73fb91ef6b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/backend/create-vacancy-action.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/logout.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/create-vacancy.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/apply-job.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/apply-job.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/login-action.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/login-action.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/post-job.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/post-job.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/update-profile.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/update-profile.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/update-resume.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/update-resume.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/edit-profile.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/edit-profile.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/employer-dashboard.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/employer-dashboard.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/index.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/job-listing.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/job-listing.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/login.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/login.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/register.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/register.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/seeker-dashboard.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/seeker-dashboard.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/style.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -81,7 +84,7 @@
       <option name="presentableId" value="Default" />
       <updated>1744540797380</updated>
       <workItem from="1744540798574" duration="5362000" />
-      <workItem from="1744566129622" duration="11863000" />
+      <workItem from="1744566129622" duration="16281000" />
     </task>
     <servers />
   </component>
