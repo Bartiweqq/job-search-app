@@ -9,7 +9,6 @@ $latest_jobs = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <div class="container fade-in">
-
     <h1>Добро пожаловать на сайт поиска работы!</h1>
 
     <?php if (isset($_SESSION['username'])): ?>
@@ -22,6 +21,7 @@ $latest_jobs = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <?php endif; ?>
 
     <p style="margin: 20px 0;">Наш сервис поможет вам быстро найти подходящую вакансию или квалифицированного кандидата.</p>
+
     <a href="/Kurs/frontend/job-listing.php" class="button">Перейти к вакансиям</a>
 
     <h3 style="margin-top: 40px;">Последние вакансии</h3>
@@ -29,7 +29,9 @@ $latest_jobs = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <ul class="latest-jobs">
             <?php foreach ($latest_jobs as $job): ?>
                 <li>
-                    <strong><?= htmlspecialchars($job['job_title']) ?></strong> — <?= htmlspecialchars($job['location']) ?>, <?= htmlspecialchars($job['salary']) ?> ₽
+                    <strong><?= htmlspecialchars($job['job_title']) ?></strong> —
+                    <?= htmlspecialchars($job['location']) ?>,
+                    <?= htmlspecialchars($job['salary']) ?> ₽
                 </li>
             <?php endforeach; ?>
         </ul>
@@ -52,4 +54,10 @@ $latest_jobs = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <ul>
                 <li><a href="/Kurs/frontend/employer-dashboard.php#post-job">📢 Публикация вакансий</a></li>
                 <li><a href="/Kurs/frontend/employer-dashboard.php#responses">👀 Просмотр откликов</a></li>
-                <li><a href="/Kurs/frontend/employer-dashboard.php">📧
+                <li><a href="/Kurs/frontend/employer-dashboard.php#responses">📧 Связь с кандидатами</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<?php include 'footer.php'; ?>
