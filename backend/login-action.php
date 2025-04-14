@@ -1,28 +1,30 @@
 <?php
 global $pdo;
+session_start();
 require_once 'db.php';
 
-// Проверка, что форма была отправлена
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $email = $_POST['email'] ?? '';
     $password = $_POST['password'] ?? '';
 
-    // Проверка, что все поля заполнены
     if (empty($email) || empty($password)) {
         echo "Пожалуйста, заполните все поля.";
         exit;
     }
 
-    // Подготовка запроса
     $stmt = $pdo->prepare("SELECT * FROM users WHERE email = :email");
     $stmt->execute(['email' => $email]);
     $user = $stmt->fetch();
 
-    // Проверка пароля
     if ($user && password_verify($password, $user['password'])) {
-        // Успешный вход — временно просто сообщение
-        echo "Добро пожаловать, " . htmlspecialchars($user['username']) . "!";
-        // Здесь можно будет сделать перенаправление в личный кабинет
+        // ✅ Успешный вход: сохраняем в сессию
+        $_SESSION['user_id'] = $user['user_id'];
+        $_SESSION['username'] = $user['username'];
+        $_SESSION['role'] = $user['role'];
+
+        // 🎯 Перенаправление на главную
+        header("Location: /Kurs/frontend/index.php");
+        exit;
     } else {
         echo "Неверный email или пароль.";
     }

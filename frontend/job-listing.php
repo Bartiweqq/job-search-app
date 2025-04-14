@@ -1,18 +1,47 @@
 <?php
 global $pdo;
 session_start();
-include 'header.php';
 require_once '../backend/db.php';
+include 'header.php';
 
-// Получаем все вакансии с работодателем
-$stmt = $pdo->query("
-    SELECT jobs.*, users.username AS employer_name
-    FROM jobs
-    JOIN users ON jobs.employer_id = users.user_id
-    ORDER BY jobs.id DESC
-");
+// Обработка фильтров
+$query = "SELECT jobs.*, users.username AS employer_name
+          FROM jobs
+          JOIN users ON jobs.employer_id = users.user_id
+          WHERE 1=1";
+$params = [];
+
+if (!empty($_GET['job_title'])) {
+    $query .= " AND jobs.job_title ILIKE ?";
+    $params[] = "%" . $_GET['job_title'] . "%";
+}
+if (!empty($_GET['location'])) {
+    $query .= " AND jobs.location ILIKE ?";
+    $params[] = "%" . $_GET['location'] . "%";
+}
+if (!empty($_GET['min_salary'])) {
+    $query .= " AND jobs.salary >= ?";
+    $params[] = $_GET['min_salary'];
+}
+if (!empty($_GET['max_salary'])) {
+    $query .= " AND jobs.salary <= ?";
+    $params[] = $_GET['max_salary'];
+}
+
+$query .= " ORDER BY jobs.id DESC";
+$stmt = $pdo->prepare($query);
+$stmt->execute($params);
 $jobs = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
+
+<h2>Поиск вакансий</h2>
+<form method="GET" action="job-listing.php" style="margin-bottom: 20px;">
+    <input type="text" name="job_title" placeholder="Название вакансии" value="<?= htmlspecialchars($_GET['job_title'] ?? '') ?>">
+    <input type="text" name="location" placeholder="Город" value="<?= htmlspecialchars($_GET['location'] ?? '') ?>">
+    <input type="number" name="min_salary" placeholder="Зарплата от" value="<?= htmlspecialchars($_GET['min_salary'] ?? '') ?>">
+    <input type="number" name="max_salary" placeholder="Зарплата до" value="<?= htmlspecialchars($_GET['max_salary'] ?? '') ?>">
+    <button type="submit">Найти</button>
+</form>
 
 <h2>Список вакансий</h2>
 
@@ -28,9 +57,10 @@ $jobs = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             <?php if (isset($_SESSION['user_id']) && $_SESSION['role'] === 'seeker'): ?>
                 <form action="/Kurs/backend/apply-job.php" method="POST">
-                    <input type="hidden" name="job_id" value="<?= $job['id'] ?>">
+                    <input type="hidden" name="vacancy_id" value="<?= $job['id'] ?>">
                     <button type="submit">Откликнуться</button>
                 </form>
+
             <?php elseif (!isset($_SESSION['user_id'])): ?>
                 <p><a href="/Kurs/frontend/login.php">Войдите</a>, чтобы откликнуться</p>
             <?php endif; ?>

@@ -3,26 +3,35 @@ global $pdo;
 session_start();
 require_once 'db.php';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SESSION['user_id']) && $_SESSION['role'] === 'seeker') {
-    $job_id = $_POST['job_id'];
-    $worker_id = $_SESSION['user_id'];
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'seeker') {
+    die("Доступ запрещен");
+}
 
-    // Проверка, откликался ли уже
-    $stmt = $pdo->prepare("SELECT * FROM applications WHERE job_id = ? AND worker_id = ?");
-    $stmt->execute([$job_id, $worker_id]);
+$seeker_id = $_SESSION['user_id'];
+$vacancy_id = $_POST['vacancy_id'] ?? null;
 
-    if ($stmt->rowCount() > 0) {
-        header("Location: /Kurs/frontend/seeker-dashboard.php?error=already_applied");
-        exit;
-    }
+if (!$vacancy_id) {
+    die("Некорректный запрос.");
+}
 
-    // Добавляем отклик
-    $stmt = $pdo->prepare("INSERT INTO applications (job_id, worker_id, status, applied_at) VALUES (?, ?, 'отправлено', NOW())");
-    $stmt->execute([$job_id, $worker_id]);
 
-    header("Location: /Kurs/frontend/seeker-dashboard.php?success=1");
-    exit;
-} else {
-    header("Location: /Kurs/frontend/login.php");
+// Проверяем, не откликался ли уже
+$stmt = $pdo->prepare("SELECT * FROM applications WHERE vacancy_id = :vacancy_id AND seeker_id = :seeker_id");
+$stmt->execute([
+    'vacancy_id' => $vacancy_id,
+    'seeker_id' => $seeker_id
+]);
+
+if ($stmt->rowCount() > 0) {
+    echo "Вы уже откликались на эту вакансию.";
     exit;
 }
+
+// Добавляем отклик
+$stmt = $pdo->prepare("INSERT INTO applications (vacancy_id, seeker_id, application_date, status) VALUES (:vacancy_id, :seeker_id, NOW(), 'pending')");
+$stmt->execute([
+    'vacancy_id' => $vacancy_id,
+    'seeker_id' => $seeker_id
+]);
+
+echo "Отклик отправлен!";
