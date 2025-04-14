@@ -7,10 +7,9 @@
     <list default="true" id="2b7de6c0-286b-4817-b77c-5a73fb91ef6b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/employer-dashboard.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/employer-dashboard.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/job-listing.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/job-listing.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/seeker-dashboard.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/seeker-dashboard.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/footer.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/footer.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/login.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/login.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/register.php" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/register.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,7 +36,7 @@
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "animations",
+    "git-widget-placeholder": "admin-panel",
     "ignore.virus.scanning.warn.message": "true",
     "last_opened_file_path": "G:/xampp/htdocs/Kurs",
     "node.js.detected.package.eslint": "true",
@@ -78,7 +77,7 @@
       <option name="presentableId" value="Default" />
       <updated>1744540797380</updated>
       <workItem from="1744540798574" duration="5362000" />
-      <workItem from="1744566129622" duration="18156000" />
+      <workItem from="1744566129622" duration="19788000" />
     </task>
     <servers />
   </component>

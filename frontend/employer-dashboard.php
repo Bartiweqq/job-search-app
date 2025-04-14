@@ -23,10 +23,10 @@ $username = $_SESSION['username'];
     <h2 onclick="toggleSection('jobForm')">📢 Разместить вакансию</h2>
     <div id="jobForm">
         <form action="/Kurs/backend/post-job.php" method="POST">
-            <input type="text" name="job_title" placeholder="Название вакансии" required>
-            <input type="number" name="salary" placeholder="Зарплата" required>
+            <input type="text" name="job_title" placeholder="Например: PHP-разработчик" required>
+            <input type="number" name="salary" placeholder="Укажите зарплату" required>
             <input type="text" name="location" placeholder="Город" required>
-            <textarea name="job_description" placeholder="Описание вакансии" rows="4" required></textarea>
+            <textarea name="job_description" placeholder="Опишите вакансию" rows="4" required></textarea>
             <button type="submit">Разместить вакансию</button>
         </form>
     </div>

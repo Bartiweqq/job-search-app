@@ -3,9 +3,9 @@
 <div class="container">
     <h2>Регистрация</h2>
     <form class="fade-in" action="/Kurs/backend/register-action.php" method="POST">
-        <input type="text" name="username" placeholder="Имя пользователя" required>
-        <input type="email" name="email" placeholder="Email" required>
-        <input type="password" name="password" placeholder="Пароль" required>
+        <input type="text" id="username" name="username" placeholder="Имя пользователя" required>
+        <input type="email" id="email" name="email" placeholder="Введите email" required>
+        <input type="password" id="password" name="password" placeholder="Введите пароль" required>
 
         <select name="role" required>
             <option value="">Выберите роль</option>
