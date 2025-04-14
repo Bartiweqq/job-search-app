@@ -8,7 +8,8 @@ $stmt = $pdo->query("SELECT * FROM jobs ORDER BY id DESC LIMIT 3");
 $latest_jobs = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
-<div class="container">
+<div class="container fade-in">
+
     <h1>Добро пожаловать на сайт поиска работы!</h1>
 
     <?php if (isset($_SESSION['username'])): ?>

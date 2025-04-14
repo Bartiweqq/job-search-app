@@ -14,7 +14,7 @@ $user_id = $_SESSION['user_id'];
 $username = $_SESSION['username'];
 ?>
 
-<div class="container">
+<div class="container fade-in">
     <h1>Личный кабинет работодателя</h1>
     <p>Здравствуйте, <strong><?= htmlspecialchars($username) ?></strong>!</p>
 
@@ -43,7 +43,7 @@ $username = $_SESSION['username'];
 
         <?php if ($vacancies): ?>
             <?php foreach ($vacancies as $vacancy): ?>
-                <div class="card">
+                <div class="card fade-in">
                     <h3><?= htmlspecialchars($vacancy['job_title']) ?></h3>
                     <p><strong>Зарплата:</strong> <?= htmlspecialchars($vacancy['salary']) ?> руб.</p>
                     <p><strong>Локация:</strong> <?= htmlspecialchars($vacancy['location']) ?></p>

@@ -2,7 +2,7 @@
 
 <div class="container">
     <h2>Вход</h2>
-    <form action="/Kurs/backend/login-action.php" method="POST">
+    <form class="fade-in" action="/Kurs/backend/login-action.php" method="POST">
         <input type="email" name="email" placeholder="Email" required>
         <input type="password" name="password" placeholder="Пароль" required>
         <button type="submit">Войти</button>

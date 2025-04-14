@@ -34,7 +34,8 @@ $stmt->execute($params);
 $jobs = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
-<div class="container">
+<div class="container fade-in">
+
     <h2>Поиск вакансий</h2>
     <form method="GET" action="job-listing.php">
         <input type="text" name="job_title" placeholder="Название вакансии" value="<?= htmlspecialchars($_GET['job_title'] ?? '') ?>">
@@ -48,7 +49,8 @@ $jobs = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <?php if ($jobs): ?>
         <?php foreach ($jobs as $job): ?>
-            <div class="card">
+            <div class="card fade-in">
+
                 <h3><?= htmlspecialchars($job['job_title']) ?></h3>
                 <p><strong>Описание:</strong> <?= nl2br(htmlspecialchars($job['job_description'])) ?></p>
                 <p><strong>Зарплата:</strong> <?= htmlspecialchars($job['salary']) ?> руб.</p>

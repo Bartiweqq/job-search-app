@@ -2,7 +2,7 @@
 
 <div class="container">
     <h2>Регистрация</h2>
-    <form action="/Kurs/backend/register-action.php" method="POST">
+    <form class="fade-in" action="/Kurs/backend/register-action.php" method="POST">
         <input type="text" name="username" placeholder="Имя пользователя" required>
         <input type="email" name="email" placeholder="Email" required>
         <input type="password" name="password" placeholder="Пароль" required>

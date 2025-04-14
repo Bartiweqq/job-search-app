@@ -22,7 +22,8 @@ $resume = $userInfo['resume'] ?? '';
 $experience = $userInfo['experience'] ?? '';
 ?>
 
-<div class="container">
+<div class="container fade-in">
+
     <h1>Личный кабинет соискателя</h1>
     <p>Здравствуйте, <strong><?= htmlspecialchars($username) ?></strong>!</p>
 
@@ -45,7 +46,8 @@ $experience = $userInfo['experience'] ?? '';
 
         <?php if ($applications): ?>
             <?php foreach ($applications as $app): ?>
-                <div class="card">
+                <div class="card fade-in">
+
                     <h3><?= htmlspecialchars($app['job_title']) ?></h3>
                     <p><strong>Локация:</strong> <?= htmlspecialchars($app['location']) ?></p>
                     <p><strong>Зарплата:</strong> <?= htmlspecialchars($app['salary']) ?> руб.</p>
@@ -62,7 +64,7 @@ $experience = $userInfo['experience'] ?? '';
 
     <h2 onclick="toggleSection('resumeForm')">📋 Резюме и опыт</h2>
     <div id="resumeForm" style="display: block;">
-        <form action="/Kurs/backend/update-resume.php" method="POST">
+        <form class="fade-in" action="/Kurs/backend/update-resume.php" method="POST">
             <label for="resume">Резюме:</label>
             <textarea name="resume" rows="5" placeholder="Введите своё резюме..." required><?= htmlspecialchars($resume) ?></textarea>
 
