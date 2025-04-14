@@ -17,14 +17,19 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $user = $stmt->fetch();
 
     if ($user && password_verify($password, $user['password'])) {
-        // ✅ Успешный вход: сохраняем в сессию
         $_SESSION['user_id'] = $user['user_id'];
         $_SESSION['username'] = $user['username'];
         $_SESSION['role'] = $user['role'];
 
-        // 🎯 Перенаправление на главную
-        header("Location: /Kurs/frontend/index.php");
-        exit;
+        // Перенаправление по роли
+        if ($user['role'] === 'admin') {
+            header("Location: /Kurs/frontend/admin-dashboard.php");
+        } elseif ($user['role'] === 'employer') {
+            header("Location: /Kurs/frontend/employer-dashboard.php");
+        } else {
+            header("Location: /Kurs/frontend/seeker-dashboard.php");
+        }
+        exit();
     } else {
         echo "Неверный email или пароль.";
     }
