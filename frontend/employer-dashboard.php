@@ -1,10 +1,10 @@
 <?php
 global $pdo;
 session_start();
-require_once '../backend/db.php'; // Подключаем PDO
+require_once '../backend/db.php';
 
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'employer') {
-    header("Location: login.php");
+    header("Location: /Kurs/frontend/login.php");
     exit();
 }
 
@@ -14,46 +14,76 @@ $user_id = $_SESSION['user_id'];
 $username = $_SESSION['username'];
 ?>
 
-<h1>Личный кабинет работодателя, <?php echo htmlspecialchars($username); ?></h1>
+<div class="container">
+    <h1>Личный кабинет работодателя</h1>
+    <p>Здравствуйте, <strong><?= htmlspecialchars($username) ?></strong>!</p>
 
-<h2>Добавить вакансию</h2>
-<form action="/Kurs/backend/post-job.php" method="POST">
-    <label>Название вакансии:</label>
-    <input type="text" name="title" required><br>
+    <hr>
 
-    <label>Зарплата:</label>
-    <input type="number" name="salary" required><br>
+    <h2>Добавить вакансию</h2>
+    <form action="/Kurs/backend/post-job.php" method="POST">
+        <input type="text" name="job_title" placeholder="Название вакансии" required>
+        <input type="number" name="salary" placeholder="Зарплата" required>
+        <input type="text" name="location" placeholder="Город" required>
+        <textarea name="job_description" placeholder="Описание вакансии" rows="4" required></textarea>
+        <button type="submit">Разместить вакансию</button>
+    </form>
 
-    <label>Опыт (лет):</label>
-    <input type="number" name="experience" required><br>
+    <hr>
 
-    <label>Описание:</label><br>
-    <textarea name="description" rows="4" cols="50" required></textarea><br>
+    <h2>Мои вакансии</h2>
+    <?php
+    $stmt = $pdo->prepare("SELECT * FROM jobs WHERE employer_id = ?");
+    $stmt->execute([$user_id]);
+    $vacancies = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    ?>
 
-    <button type="submit">Разместить вакансию</button>
-</form>
+    <?php if ($vacancies): ?>
+        <?php foreach ($vacancies as $vacancy): ?>
+            <div class="card">
+                <h3><?= htmlspecialchars($vacancy['job_title']) ?></h3>
+                <p><strong>Зарплата:</strong> <?= htmlspecialchars($vacancy['salary']) ?> руб.</p>
+                <p><strong>Локация:</strong> <?= htmlspecialchars($vacancy['location']) ?></p>
+                <p><?= nl2br(htmlspecialchars($vacancy['job_description'])) ?></p>
+            </div>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <p>У вас ещё нет вакансий.</p>
+    <?php endif; ?>
 
-<hr>
+    <hr>
 
-<h2>Мои вакансии</h2>
+    <hr>
 
-<?php
-$stmt = $pdo->prepare("SELECT * FROM jobs WHERE employer_id = ?");
-$stmt->execute([$user_id]);
-$vacancies = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    <h2>Отклики на вакансии</h2>
+    <?php
+    $stmt = $pdo->prepare("
+    SELECT a.application_date, a.status,
+           u.username AS seeker_name, u.email, u.resume, u.experience,
+           j.job_title
+    FROM applications a
+    JOIN users u ON a.seeker_id = u.user_id
+    JOIN jobs j ON a.vacancy_id = j.id
+    WHERE j.employer_id = :employer_id
+    ORDER BY a.application_date DESC
+");
+    $stmt->execute(['employer_id' => $user_id]);
+    $applications = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    ?>
 
-if ($vacancies):
-    foreach ($vacancies as $vacancy): ?>
-        <div style="border:1px solid #ccc; padding:10px; margin:10px 0;">
-            <strong><?= htmlspecialchars($vacancy['title']) ?></strong><br>
-            Зарплата: <?= htmlspecialchars($vacancy['salary']) ?> руб.<br>
-            Опыт: <?= htmlspecialchars($vacancy['experience']) ?> лет<br>
-            <p><?= nl2br(htmlspecialchars($vacancy['description'])) ?></p>
-        </div>
-    <?php endforeach;
-else:
-    echo "<p>У вас нет вакансий.</p>";
-endif;
-?>
+    <?php if ($applications): ?>
+        <?php foreach ($applications as $app): ?>
+            <div class="card">
+                <h4>Вакансия: <?= htmlspecialchars($app['job_title']) ?></h4>
+                <p><strong>Соискатель:</strong> <?= htmlspecialchars($app['seeker_name']) ?> (<?= htmlspecialchars($app['email']) ?>)</p>
+                <p><strong>Дата отклика:</strong> <?= htmlspecialchars($app['application_date']) ?></p>
+                <p><strong>Опыт:</strong> <?= nl2br(htmlspecialchars($app['experience'] ?? '—')) ?></p>
+                <p><strong>Резюме:</strong><br><?= nl2br(htmlspecialchars($app['resume'] ?? '—')) ?></p>
+            </div>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <p>Откликов пока нет.</p>
+    <?php endif; ?>
+
 
 <?php include 'footer.php'; ?>
